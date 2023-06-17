@@ -1,5 +1,3 @@
-
-
 # 1st Deliverable
 
 # "\u2663" = Clubs
@@ -38,7 +36,6 @@ def deck_print(p_card_deck):
 def get_random_card(p_card_deck):
     import random
 
-    card_deck = ['apple', 'banana', 'orange', 'grape', 'kiwi']
     num_elements = 1  # Number of elements to select randomly
 
     random_elements = 0
@@ -50,13 +47,14 @@ def get_random_card(p_card_deck):
         random_index = (random_index)
 
     print("Random elements:", random_elements)
-    print("Indices of random elements:", random_index)
+    print("Index of random elements:", random_index)
 
     set_values_zero(p_card_deck, random_index)
     
-    return p_card_deck[random_index]
+    # return p_card_deck[random_index]
 
 def set_values_zero(p_deck, p_index):
+    print(p_deck[p_index])
     p_deck[p_index] = 0
     deck_print(p_deck)
 
