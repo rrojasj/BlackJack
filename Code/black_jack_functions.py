@@ -1,68 +1,49 @@
-# 1st Deliverable
+import random
 
-# "\u2663" = Clubs
-# "\u2665" = Heart
-# "\u2666" = Diamonds
-# "\u2660" = Spades
-
-def deck_construction():
-
-    # List of Ranks
-    card_deck_ranks = ['\u2663', '\u2665', '\u2666', '\u2660']
+def run_hands(player_1_hand, player_2_hand, deck):
+    for _ in range (2): 
+        dealCard (player_1_hand, deck)
+        total_p1 = total(player_1_hand)
+        dealCard (player_2_hand)
+        total_p2 = total(player_2_hand)
+        player_totals = [total_p1, total_p2]
     
-    # List of Suits
-    card_deck_suits = ['A','A','A','A', 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 'J', 'J', 'J', 'J', 'Q', 'Q', 'Q', 'Q', 'K', 'K', 'K', 'K']
+    return player_totals
 
+def dealCard(turn, deck):
+    card = random.choice(deck)
+    index = random.randint(0, len(deck) - 1)
+    turn.append(card)
+    deck.remove(card)
 
-    card_deck_list = [card_deck_ranks, card_deck_suits]
-
-    return card_deck_list
-
-def deck_print(p_card_deck):
-
-    ranks = p_card_deck[0]
-    suits = p_card_deck[1]
-
-    # Matching all the suits with all the ranks
-    # for rank in ranks:
-    i=1
-    for suit in suits:
-        print(f'{i} = {suit}'.ljust(10), end='')
-        i = i+1
-
-    # Spacer
-    print()
-
-def get_random_card(p_card_deck):
-    import random
-
-    num_elements = 1  # Number of elements to select randomly
-
-    random_elements = 0
-    random_index = 0
-
-    for _ in range(num_elements):
-        random_index = random.randint(0, len(p_card_deck) - 1)
-        random_elements = (p_card_deck[random_index])
-        random_index = (random_index)
-
-    print("Random elements:", random_elements)
-    print("Index of random elements:", random_index)
-
-    set_values_zero(p_card_deck, random_index)
+def total(turn):
+    total=0
+    face =["J","Q","K"]
     
-    # return p_card_deck[random_index]
+    for card in turn:
+        if total <= 20:
+            if card in range(1,11):
+                total += card
+            
+            elif card in face:
+                total += 10
+                    
+            else:
+                ace_selection = input("Valor del A's - 1: 1 - 2: 11\n")
+                if ace_selection == "1":
+                    total += 1
+                else:
+                    total += 11
+            # else:
+            #     if total > 10:
+            #         total += 1
+                    
+            #     else:
+            #         total += 11
+    return total
 
-def set_values_zero(p_deck, p_index):
-    print(p_deck[p_index])
-    p_deck[p_index] = 0
-    deck_print(p_deck)
-
-def show_cards():
-    return
-
-def get_as_value():
-    return
-
-def define_points_dist():
-    return
+# def revealplayer_2_hand():
+#     if len(player_2_hand) ==2 :
+#         return player_2_hand [0]
+#     elif len (player_2_hand) > 2:
+#      return player_2_hand[0] , player_2_hand[1]
