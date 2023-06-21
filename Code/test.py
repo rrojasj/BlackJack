@@ -183,3 +183,126 @@
     
 #     elif total(player_1_hand) and total (player_2_hand) > 21:
 #        print(f"el jugador obtuvo 1 {pts} ")
+
+
+
+
+from black_jack_functions import *
+import random
+
+# card_deck = deck_construction()
+
+# deck_print(card_deck)
+
+# suits_list = card_deck[1]
+ 
+# rndm_card_index_list = get_random_card(suits_list)
+
+
+player_1_in = True
+player_2_in = True
+
+deck=[ 2,3,4,5,6,7,8,9,10,2,3,4,5,6,7,8,9,10,2,3,4,5,6,7,8,9,10,2,3,4,5,6,7,8,9,10,2,3,4,5,6,7,8,9,10,'J','Q','K','A','J','Q','K','A','J','Q','K','A','J','Q','K','A']
+
+player_1_hand=[]
+player_2_hand =[] 
+
+
+for _ in range (2): 
+    dealCard (player_1_hand, deck)
+    dealCard (player_2_hand, deck)
+
+formatted_hand_1 = ' y '.join(map(str, player_1_hand))
+formatted_hand_2 = ' y '.join(map(str, player_2_hand))
+
+
+
+while player_1_in or player_2_in:
+    
+    if player_1_in:
+        
+        print(f'\nMano del Jugador 1: {formatted_hand_1}')
+        print (f'- Total: {total(player_1_hand)}')
+        stayOrHit1 = input("\nJugador decida - 1: Se queda 2: Entra ")
+        if stayOrHit1 == '1':
+            player_1_in = False
+        else:
+            dealCard(player_1_hand, deck)
+            print(f'\nMano del Jugador 1: {formatted_hand_1}')
+            print(f'- Total: {total(player_1_hand)}')
+    
+    if player_2_in:
+        print(f'\nMano del Jugador 2: {formatted_hand_2}')
+        print (f'- Total: {total(player_2_hand)}')
+        stayOrHit2 = input("\nJugador decida - 1: Se queda 2: Entra ")
+        if stayOrHit2 == '1':
+            player_2_in = False
+        else:
+            dealCard(player_2_hand, deck)
+            print(f'\nMano del Jugador 2: {formatted_hand_2}') 
+            print(f'- Total: {total(player_2_hand)}')
+            
+
+    # if total (player_2_hand) > 16:
+    #    player_2_in= False
+    # else:
+    #   dealCard(player_2_hand)
+
+    if total (player_1_hand) >= 21:
+        break
+    elif total (player_2_hand) >= 21: 
+        break
+
+total_p1 = total(player_1_hand)
+total_p2 = total(player_2_hand)
+
+win_msg_1 = f"\nEl J1 tiene {player_1_hand} por un total de {total_p1} y el J2 tiene {player_2_hand} por un total de {total_p2}\nBlackjack! Jugador 1 gana!\nBaraja = {deck}\n"
+
+win_msg_2 = f"\nEl J1 tiene {player_1_hand} por un total de {total_p1} y el J2 tiene {player_2_hand} por un total de {total_p2}\nBlackjack! Jugador 2 gana!\nBaraja = {deck}\n"
+
+win_msg_3 = f"\nEl J1 tiene {player_1_hand} por un total de {total_p1} y el J2 tiene {player_2_hand} por un total de {total_p2}\nJugador 1 se ha pasado! El jugador 2 ha ganado!\nBaraja = {deck}\n"
+
+win_msg_4 = f"\nEl J1 tiene {player_1_hand} por un total de {total_p1} y el J2 tiene {player_2_hand} por un total de {total_p2}\nJugador 2 se ha pasado! El jugador 1 ha ganado!\nBaraja = {deck}\n"
+
+win_msg_5 = f"\nEl J1 tiene {player_1_hand} por un total de {total_p1} y el J2 tiene {player_2_hand} por un total de {total_p2}\nEl jugador 2 gana!\nBaraja = {deck}\n"
+
+win_msg_6 = f"\nEl J1 tiene {player_1_hand} por un total de {total_p1} y el J2 tiene {player_2_hand} por un total de {total_p2}\nEl jugador 1 gana!\nBaraja = {deck}\n"
+
+
+if total(player_1_hand) == 21: 
+    print(win_msg_1)
+
+elif total(player_2_hand) == 21:
+    print(win_msg_2)
+
+elif total(player_1_hand) > 21:
+    print(win_msg_3)
+
+elif total(player_2_hand) > 21:
+    print(win_msg_4)
+
+elif  21 - total(player_2_hand) < 21 -total(player_1_hand):
+    print(win_msg_5)
+
+elif 21 - total(player_2_hand) > 21 - total(player_1_hand):
+   print(win_msg_6)
+
+
+# TO DO
+
+# def pts ():
+#     if total(player_2_hand) or total(player_1_hand) == 21:
+#         print(f" el jugador obtuvo 6 {pts}")
+    
+#     elif total(player_2_hand) and total(player_1_hand) == 2:
+#         print(f"el jugador obtuvo 3 {pts}")
+    
+#     elif total(player_1_hand) or total(player_2_hand) == range [17,20] < 21:
+#        print(f"el jugador{pts(player_1_hand)} obtuvo 2 y el jugador  ")
+    
+#     elif total (player_1_hand) or total(player_2_hand) < 17 <= 21: 
+#        print(f" el jugador obtuvo 1 {pts}")
+    
+#     elif total(player_1_hand) and total (player_2_hand) > 21:
+#        print(f"el jugador obtuvo 1 {pts} ")
+

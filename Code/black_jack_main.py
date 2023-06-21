@@ -58,13 +58,12 @@ for _ in range (2):
     dealCard (player_1_hand)
     dealCard (player_2_hand)
 
-
 while player_1_in or player_2_in:
     
     if player_1_in:
         print('\nMano del Jugador 1: ')
         print(*player_1_hand, sep=", ")
-        print (f"\nEl jugador 1 tiene {player_1_hand} por un total de {total(player_1_hand)}")
+        print (f"- Total: {total(player_1_hand)}")
         stayOrHit1 = input("\nJugador 1 decida - 1: Se queda 2: Entra\n")
         if stayOrHit1 == '1':
             player_1_in = False
@@ -77,7 +76,7 @@ while player_1_in or player_2_in:
     if player_2_in:
         print('\nMano del Jugador 2: ')
         print(*player_2_hand, sep=", ")
-        print (f"\nEl jugador 2 tiene {player_2_hand} por un total de {total(player_2_hand)}")
+        print (f"- Total: {total(player_2_hand)}")
         stayOrHit2 = input("\nJugador 2 decida - 1: Se queda 2: Entra\n")
         if stayOrHit2 == '1':
             player_2_in = False

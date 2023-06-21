@@ -12,7 +12,7 @@ def run_hands(player_1_hand, player_2_hand, deck):
 
 def dealCard(turn, deck):
     card = random.choice(deck)
-    index = random.randint(0, len(deck) - 1)
+    # index = random.randint(0, len(deck) - 1)
     turn.append(card)
     deck.remove(card)
 
