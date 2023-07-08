@@ -1,3 +1,8 @@
+import random
+
+jug1 = "Jugador 1"
+jug2 = "Jugador 2"
+
 def crear_baraja() -> list:
     """
     function: crear_baraja()
@@ -5,19 +10,19 @@ def crear_baraja() -> list:
     params: none
     """
     baraja = [
-    "2 \u2665", "2 \u2666", "2 \u2663", "2 \u2660",
-    "3 \u2665", "3 \u2666", "3 \u2663", "3 \u2660",
-    "4 \u2665", "4 \u2666", "4 \u2663", "4 \u2660",
-    "5 \u2665", "5 \u2666", "5 \u2663", "5 \u2660",
-    "6 \u2665", "6 \u2666", "6 \u2663", "6 \u2660",
-    "7 \u2665", "7 \u2666", "7 \u2663", "7 \u2660",
-    "8 \u2665", "8 \u2666", "8 \u2663", "8 \u2660",
-    "9 \u2665", "9 \u2666", "9 \u2663", "9 \u2660",
-    "10 \u2665", "10 \u2666", "10 \u2663", "10 \u2660",
-    "J \u2665", "J \u2666", "J \u2663", "J \u2660",
-    "Q \u2665", "Q \u2666", "Q \u2663", "Q \u2660",
-    "K \u2665", "K \u2666", "K \u2663", "K \u2660",
-    "A's \u2665", "A's \u2666", "A's \u2663", "A's \u2660"]
+    "2", "2", "2", "2",
+    "3", "3", "3", "3",
+    "4", "4", "4", "4",
+    "5", "5", "5", "5",
+    "6", "6", "6", "6",
+    "7", "7", "7", "7",
+    "8", "8", "8", "8",
+    "9", "9", "9", "9",
+    "10", "10", "10", "10",
+    "J", "J", "J", "J",
+    "Q", "Q", "Q", "Q",
+    "K", "K", "K", "K",
+    "A", "A", "A", "A"]
 
     return baraja
 
@@ -30,25 +35,43 @@ def print_baraja(baraja):
     for i in range(0, len(baraja), 4):
      print(baraja[i:i+4])
 
+def convert_as(mano_J1:list) -> list:
+    """
+    function: convert_as()
+    description: Convierte el valor actual de la mano en el valor que indique el usuario
+    params: mano_J1
+    """
+    valid = True
+    for i in range(len(mano_J1)):
+        while valid == True:
+            decision = input("Qué valor desea darle al As, 1 o 11?\n")
+            if decision == "1":
+                mano_J1[i] = 1
+                valid = False
+            elif decision == "11":
+                mano_J1[i] = 11
+                valid = False
+            else:
+                print('Lo siento, el dado no puede devolver ese valor')
+                valid = False
+    
+    return mano_J1
+        
 def sumar_mano(mano_jugador:list) -> int:
     """
     function: sumar_mano()
     description: Suma los valores que contiene la mano del jugador
     params: mano_jugador
-    
     """
     total_mano = 0
 
     for i in range(2):
-        valor_actual = mano_jugador[i][0]
+        valor_actual = mano_jugador[i]
         if valor_actual in ["J","Q","K","1"]:
             total_mano += 10
-        elif valor_actual == "A":
-            decision = input("Qué valor desea darle al As, 1 o 11?\n")
-            if decision == "1":
-                total_mano += 1
-            elif decision == "11":
-                total_mano += 11
+        # elif valor_actual == "A":
+        #     valor_as = convert_as(valor_actual)
+        #     total_mano += valor_as
         else:
             total_mano += int(valor_actual)
     
@@ -111,7 +134,11 @@ def total_pts(total_J1:int, total_J2:int) -> dict:
     return totales
 
 def play_J1(baraja) -> dict:
-    import random
+    """
+    function: total_pts()
+    description: Imprime el mensaje con la mano del jugador
+    params: jugador, mano_jugador
+    """
     play_in = True
     data_J1 = {}
     mano_J1 = []
@@ -130,18 +157,24 @@ def play_J1(baraja) -> dict:
         if len(mano_J1) == 2:
             play_in = False
 
-    print_mano(jug1, mano_J1)    
+    print_mano(jug1, mano_J1)
+
+    # Verifica si existen A's y si es verdadero reemplaza el valor por el que indique el usuario
+    cant_ace = mano_J1.count("A")
+    if cant_ace >= 1:
+        mano_J1 = convert_as(mano_J1)
+
     total = sumar_mano(mano_J1)
     data_J1 = {
         "total_J1": total,
-        "baraja_actual": baraja_actual
+        "baraja_actual": baraja_actual,
+        "mano_J1": mano_J1
     }
-    baraja_actual = data_J1["baraja_actual"]
 
     return data_J1
 
 def play_J2(baraja) -> dict:
-    import random
+
     play_in = True
     data_J2 = {}
     mano_J2 = []
@@ -160,12 +193,40 @@ def play_J2(baraja) -> dict:
         if len(mano_J2) == 2:
             play_in = False
 
-    print_mano(jug2, mano_J2)    
+    print_mano(jug2, mano_J2) 
+
+    # Verifica si existen A's y si es verdadero reemplaza el valor por el que indique el usuario
+    cant_as = mano_J2.count('A')
+    if cant_as >= 1:
+        mano_J2 = convert_as(mano_J2)
+
     total = sumar_mano(mano_J2)
     data_J2 = {
         "total_J2": total,
-        "baraja_actual": baraja_actual
+        "baraja_actual": baraja_actual,
+        "mano_J2": mano_J2
     }
     baraja_actual = data_J2["baraja_actual"]
 
     return data_J2
+
+# Para implementar para el avance #3
+def jugar_extra(dict_J1:dict) -> dict:
+
+    baraja_actual = dict_J1["baraja_actual"]
+    carta_aleatoria = random.randint(0,51)
+
+    mano_J1 = dict_J1["mano_J1"]
+
+    if dict_J1["baraja_actual"][carta_aleatoria] == 0:
+        ""
+    else:
+        mano_J1.append(dict_J1["baraja_actual"][carta_aleatoria])
+        print_mano(jug1, mano_J1)
+        total = sumar_mano(mano_J1)
+        data_J1 = {
+            "total_J1": total,
+            "baraja_actual": baraja_actual,
+            "mano_J1": mano_J1
+    }  
+    return data_J1

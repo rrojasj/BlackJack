@@ -37,6 +37,9 @@ data_J1 = play_J1(baraja)
 print("Total: {}".format(data_J1["total_J1"]))
 baraja_actual = data_J1["baraja_actual"]
 
+if data_J1["total_J1"] >= 20:
+    data_J1 = jugar_extra(data_J1)
+
 #Parte del jugador 2
 data_J2 = play_J2(baraja_actual)
 print("Total: {}".format(data_J2["total_J2"]))
@@ -51,5 +54,4 @@ print_baraja(baraja_actual)
 # sumatoria_total_J2 += totales['total_J2']
 # rondas_de_juego += 1
 
-print_baraja(baraja)
 print("")
