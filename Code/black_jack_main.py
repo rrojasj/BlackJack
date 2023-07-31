@@ -37,6 +37,7 @@ while salida_juego == False:
         #Parte del jugador 1
         data_J1 = play_J1(baraja)
         print("Total: {}".format(data_J1["total_mano_J1"]))
+        # print("Total: " + str(data_J1["total_mano_J1"])) - Qué es la diferencia o ventaja entre una y otra?
         baraja = data_J1["baraja_actual"]
         total_J1 = data_J1["total_mano_J1"]
 

@@ -612,3 +612,115 @@
 
 # ============================================================================== #
 
+
+# num_secreto = 0
+# num = 0
+# cant_intentos = 0
+# num_secreto = int(input('Digite el número secreto:'))
+
+# while (num != num_secreto):
+#     num = int(input('Digite un número: '))
+#     if (num == num_secreto):
+#         print('Número correcto')
+#     else:
+#         if (num > num_secreto):
+#             print('digite un número menor')
+#         else:
+#             print('digite un número mayor')
+#     cant_intentos += 1
+
+# print(f'total de intentos realizados: {cant_intentos}')
+
+# ============================================================================== #
+
+# x = 10
+# name = 'lola'
+# y = 12
+
+# while x < 14:
+#     print ('La ')
+#     if y > 11 or x != 11:
+#         x = x+1
+#         print('vaca ')
+#         orejas = 2
+#         if name == 'lola':
+#             print(name)
+#             if orejas != 1:
+#                 print(' tiene orejas')
+#         else:
+#             print('piola')
+#     else:
+#         print('nope')
+
+# ============================================================================== #
+
+# contador_externo = 0
+
+# while contador_externo < 3000:
+#     contador_externo += 1
+#     contador_interno = 0
+#     while contador_interno < 5000:
+#         contador_interno += 1
+#         total = contador_externo + contador_interno
+#         print(f'Hola con total de: {total}')
+
+# ============================================================================== #
+
+# lista = [1,2,3,4,5,6,7,8,9,10]
+# while len(lista) > 0:
+#     lista.pop()
+#     print('me quedan menos...')
+
+# ============================================================================== #
+
+# numero = 1
+
+# while numero <= 1000: 
+#     numero *= 2
+
+# ============================================================================== #
+
+# for fizzbuzz in range(10):
+
+#     if fizzbuzz % 3 == 0 and fizzbuzz % 5 == 0: print("fizzbuzz")
+
+#     elif fizzbuzz % 3 == 0: print("fizz")
+
+#     elif fizzbuzz % 5 == 0: print("buzz")
+
+#     print(fizzbuzz)
+
+# ============================================================================== #
+
+# lista = [1,2,3,4,5,6,7,8,9,10]
+# lista_mult = [x * 2 for x in lista]
+
+# print(lista_mult)
+
+# ============================================================================== #
+
+# lista = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+# elemento = 6
+# izquierda = 0
+# derecha = len (lista) - 1
+# encontrado = False
+
+# while izquierda <= derecha and not encontrado:
+#     medio = (izquierda + derecha) % 2
+#     if lista[medio] == elemento:
+#         encontrado = True
+#     elif lista[medio] < elemento:
+#         izquierda = medio - 1
+#     else:
+#         derecha = medio + 1
+
+# ============================================================================== #
+
+# matriz=[
+#     [1,2,3,4,5],
+#     [6,7,8,9,101,
+#     [12,13,14,15,16],
+#     [13,17,18, 19, 20],
+#     [21, 22,23, 24,25]]]
+# y=enumerate (matriz)
+# print (v[4])

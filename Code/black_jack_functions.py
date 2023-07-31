@@ -9,36 +9,20 @@ def crear_baraja() -> list:
     descripción: Crea la baraja con todos sus valores
     params: none
     """
-    # baraja = [
-    # "2", "2", "2", "2",
-    # "3", "3", "3", "3",
-    # "4", "4", "4", "4",
-    # "5", "5", "5", "5",
-    # "6", "6", "6", "6",
-    # "7", "7", "7", "7",
-    # "8", "8", "8", "8",
-    # "9", "9", "9", "9",
-    # "10", "10", "10", "10",
-    # "J", "J", "J", "J",
-    # "Q", "Q", "Q", "Q",
-    # "K", "K", "K", "K",
-    # "A", "A", "A", "A"]
-
-    # Baraja de prueba
     baraja = [
-    0, 0, 0, "2",
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, "5", 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    "8", 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0 ,0,
-    0, 0, 0, 0,
-    0, "Q", 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0]
+    "2", "2", "2", "2",
+    "3", "3", "3", "3",
+    "4", "4", "4", "4",
+    "5", "5", "5", "5",
+    "6", "6", "6", "6",
+    "7", "7", "7", "7",
+    "8", "8", "8", "8",
+    "9", "9", "9", "9",
+    "10", "10", "10", "10",
+    "J", "J", "J", "J",
+    "Q", "Q", "Q", "Q",
+    "K", "K", "K", "K",
+    "A", "A", "A", "A"]
 
     return baraja
 
@@ -49,24 +33,24 @@ def print_baraja(baraja):
     params: baraja
     """
     for i in range(0, len(baraja), 4):
-     print(baraja[i:i+4])
+     print(', '.join(baraja[i:i+4]))
 
-def convert_ace(mano_J1:list) -> list:
+def convert_ace(mano_jug:list) -> list:
     """
     función: convert_as()
     descripción: Convierte el valor actual de la mano en el valor que indique el usuario
     params: mano_J1
     """
-    for index in range(len(mano_J1)):
-        if mano_J1[index] == "A":
+    for index in range(len(mano_jug)):
+        if mano_jug[index] == "A":
             decision = input("Qué valor desea darle al As, 1 o 11?\n")
 
             if decision == "1":
-                mano_J1[index] = 1
+                mano_jug[index] = 1
             elif decision == "11":
-                mano_J1[index] = 11
+                mano_jug[index] = 11
     
-    return mano_J1
+    return mano_jug
         
 def sumar_mano(mano_jugador:list) -> int:
     """
@@ -132,6 +116,7 @@ def total_pts(total_J1:int, total_J2:int) -> dict:
     if total_J2 == 21:
         if total_J1 == 21:
             puntos_J2 += 3
+            puntos_J1 += 3
         else:
             puntos_J2 += 6
     elif total_J2 >= 17 and total_J2 <= 20:
@@ -166,9 +151,7 @@ def play_J1(baraja) -> dict:
 
     while play_in:
         carta_aleatoria = random.randint(0,51)
-        if baraja_actual[carta_aleatoria] == 0:
-            ""
-        else:
+        if baraja_actual[carta_aleatoria] != 0:
             mano_J1.append(baraja_actual[carta_aleatoria])
             baraja_actual[carta_aleatoria] = 0
         
@@ -274,4 +257,44 @@ def obtener_resultado(total_pts_J1:int, total_pts_J2:int) -> str:
             msj = f"Ganador del juego: {jug2}"
 
     return msj
-        
+
+# -- FUNCIONES DE PRUEBAS
+
+# def crear_baraja() -> list:
+#     """
+#     función: crear_baraja() -- PRUEBAS
+#     descripción: Crea la baraja con todos sus valores
+#     params: none
+#     """
+#     # baraja = [
+#     # "2", "2", "2", "2",
+#     # "3", "3", "3", "3",
+#     # "4", "4", "4", "4",
+#     # "5", "5", "5", "5",
+#     # "6", "6", "6", "6",
+#     # "7", "7", "7", "7",
+#     # "8", "8", "8", "8",
+#     # "9", "9", "9", "9",
+#     # "10", "10", "10", "10",
+#     # "J", "J", "J", "J",
+#     # "Q", "Q", "Q", "Q",
+#     # "K", "K", "K", "K",
+#     # "A", "A", "A", "A"]
+
+#     # Baraja de prueba
+#     baraja = [
+#     0, 0, 0, "2",
+#     0, 0, 0, 0,
+#     0, 0, 0, 0,
+#     0, 0, "5", 0,
+#     0, 0, 0, 0,
+#     0, 0, 0, 0,
+#     "8", 0, 0, 0,
+#     0, 0, 0, 0,
+#     0, 0, 0 ,0,
+#     0, 0, 0, 0,
+#     0, "Q", 0, 0,
+#     0, 0, 0, 0,
+#     0, 0, 0, 0]
+
+#     return baraja
