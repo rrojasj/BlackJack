@@ -5,7 +5,38 @@ from datetime import datetime
 jug1 = "Jugador 1"
 jug2 = "Jugador 2"
 
-def crear_baraja() -> list:
+def crear_bitacora() -> str:
+    """
+    función: random_boolean()
+    descripción: Función para obtener un valor aleatorio de True o False
+    params: N/A
+    """
+    directory = "/Users/robjimn/Documents/Roberto Rojas/Cenfotec/Principios Programación/Proyecto/bitacora"
+
+    tiempo_actual = datetime.now()
+
+    # Crear String de timestamp
+    timestamp_str = tiempo_actual.strftime("%d%m%Y_%H%M%S")
+
+    file_name = f"Blackjack_Bitácora_{timestamp_str}.txt"
+
+    file_path = os.path.join(directory, file_name)
+
+    with open(file_path, "w") as file:
+        file.write(f"Bitácora: {tiempo_actual}\nPD: Las horas se muestran en formato de 24 horas\n")
+
+    return file_path
+
+def agregar_accion_bitacora(dir_bitacora, msj_bitacora):
+
+    ta = datetime.now()
+    formatted_time = ta.strftime("%I:%M:%S %p")
+    msj_completo = f"- {formatted_time} - {msj_bitacora}\n"
+
+    with open(dir_bitacora, "a") as file:
+        file.write(msj_completo)
+
+def crear_baraja(dir_bitacora: str) -> list:
     """
     función: crear_baraja()
     descripción: Crea la baraja con todos sus valores
@@ -26,18 +57,25 @@ def crear_baraja() -> list:
     "K", "K", "K", "K",
     "A", "A", "A", "A"]
 
+    msj_bitacora = f"Se ha creado la baraja.\n" 
+    agregar_accion_bitacora(dir_bitacora, msj_bitacora)
+
     return baraja
 
-def print_baraja(baraja: list):
+def print_baraja(baraja: list, dir_bitacora: str):
     """
     función: print_baraja()
     descripción: Imprime la baraja con sus elementos actuales
     params: baraja
     """
+    
     for i in range(0, len(baraja), 4):
 
         print(', '.join(map(str, baraja[i:i+4]))) # With this option "map" converts each element to a string
         #  print(', '.join(baraja[i:i+4])) - This option reads only the strings
+
+    msj_bitacora = f"Se ha solicitado mostrar la baraja.\n" 
+    agregar_accion_bitacora(dir_bitacora, msj_bitacora)
 
 def convert_ace(mano_jug:list, jugador: str, dir_bitacora: str) -> list:
     """
@@ -92,48 +130,6 @@ def print_mano(jugador:str, mano_jugador:list):
         cont += 1
     print("")
 
-def calcular_pts_individuales(total_jug, total_adv):
-
-    bj = 21
-    pts_won = 0
-
-    if total_jug == bj:
-        if total_adv == bj:
-            pts_won = 3
-        else:
-            pts_won = 6
-    else:
-        if total_jug >= 17 and total_jug <= 20:
-            if total_adv > 21:
-                pts_won = 2
-            elif total_jug > total_adv:
-                pts_won = 2
-        else:
-            if total_jug < 17:
-                if total_jug > total_adv:
-                    pts_won = 1
-            else:
-                if total_jug > bj:
-                    pts_won = 0
-    return pts_won
-
-def total_pts(total_J1:int, total_J2:int) -> dict:
-    """
-    función: total_pts()
-    descripción: Imprime el mensaje con la mano del jugador
-    params: jugador, mano_jugador
-    """
-
-    puntos_J1 = calcular_pts_individuales(total_J1, total_J2)
-    puntos_J2 = calcular_pts_individuales(total_J2, total_J1)
-
-    totales = {
-        'pts_J1': puntos_J1,
-        'pts_J2': puntos_J2
-        }
-    
-    return totales
-
 def play_J1(baraja: list, dir_bitacora: str) -> dict:
     """
     función: play_J1()
@@ -152,15 +148,7 @@ def play_J1(baraja: list, dir_bitacora: str) -> dict:
         if baraja_actual[carta_aleatoria] != 0:
             mano_J1.append(baraja_actual[carta_aleatoria])
 
-            if carta_aleatoria in ["J", "Q", "K"]:
-                # msj_bitacora = jug1 + " - Carta: " + str(baraja_actual[carta_aleatoria]) + "y su valor es '10'.\n"
-                msj_bitacora = f"{jug1} - Carta: '{baraja_actual[carta_aleatoria]}' y su valor es '10'.\n" 
-                agregar_accion_bitacora(dir_bitacora, msj_bitacora)
-            else:
-                # msj_bitacora = msj_bitacora = jug1 + " - Carta: " + str(baraja_actual[carta_aleatoria]) + "y su valor es" + str(baraja_actual[carta_aleatoria])+".\n"
-
-                msj_bitacora = f"{jug1} - Carta: '{baraja_actual[carta_aleatoria]}' y su valor es '{baraja_actual[carta_aleatoria]}.'\n" 
-                agregar_accion_bitacora(dir_bitacora, msj_bitacora)
+            enviar_msj_bitacora(baraja_actual[carta_aleatoria], dir_bitacora)
             
             baraja_actual[carta_aleatoria] = 0
         
@@ -207,13 +195,7 @@ def play_J2(baraja: list, dir_bitacora: str) -> dict:
         else:
             mano_J2.append(baraja_actual[carta_aleatoria])
             
-            if carta_aleatoria in ["J", "Q", "K"]:
-                msj_bitacora = f"{jug2} - Carta: '{baraja_actual[carta_aleatoria]}' y su valor es '10'.\n" 
-
-                agregar_accion_bitacora(dir_bitacora, msj_bitacora)
-            else:
-                msj_bitacora = f"{jug2} - Carta: '{baraja_actual[carta_aleatoria]}' y su valor es '{baraja_actual[carta_aleatoria]}.'\n" 
-                agregar_accion_bitacora(dir_bitacora, msj_bitacora)
+            enviar_msj_bitacora(baraja_actual[carta_aleatoria], dir_bitacora)
 
             baraja_actual[carta_aleatoria] = 0
         
@@ -253,10 +235,12 @@ def jugar_extra_1(dict_J1:dict, dir_bitacora: str) -> dict:
 
     mano_J1 = dict_J1["mano_J1"]
 
-    if dict_J1["baraja_actual"][carta_aleatoria] == 0:
-        ""
-    else:
+    if dict_J1["baraja_actual"][carta_aleatoria] != 0:
+
         mano_J1.append(dict_J1["baraja_actual"][carta_aleatoria])
+
+        enviar_msj_bitacora(baraja_actual[carta_aleatoria], dir_bitacora)
+
         baraja_actual[carta_aleatoria] = 0
         print_mano(jug1, mano_J1)
 
@@ -285,10 +269,11 @@ def jugar_extra_2(dict_J2:dict, dir_bitacora: str) -> dict:
 
     mano_J2 = dict_J2["mano_J2"]
 
-    if dict_J2["baraja_actual"][carta_aleatoria] == 0:
-        ""
-    else:
+    if dict_J2["baraja_actual"][carta_aleatoria] != 0:
         mano_J2.append(dict_J2["baraja_actual"][carta_aleatoria])
+
+        enviar_msj_bitacora(baraja_actual[carta_aleatoria], dir_bitacora)
+
         baraja_actual[carta_aleatoria] = 0
         print_mano(jug2, mano_J2)
 
@@ -327,6 +312,61 @@ def obtener_resultado(total_pts_J1:int, total_pts_J2:int, dir_bitacora:str) -> s
 
     return msj
 
+def total_pts(total_J1:int, total_J2:int) -> dict:
+    """
+    función: total_pts()
+    descripción: Imprime el mensaje con la mano del jugador
+    params: jugador, mano_jugador
+    """
+
+    puntos_J1 = calcular_pts_individuales(total_J1, total_J2)
+    puntos_J2 = calcular_pts_individuales(total_J2, total_J1)
+
+    totales = {
+        'pts_J1': puntos_J1,
+        'pts_J2': puntos_J2
+        }
+    
+    return totales
+
+def calcular_pts_individuales(total_jug, total_adv):
+
+    bj = 21
+    pts_won = 0
+
+    if total_jug == bj:
+        if total_adv == bj:
+            pts_won = 3
+        else:
+            pts_won = 6
+    else:
+        if total_jug >= 17 and total_jug <= 20:
+            if total_adv > 21:
+                pts_won = 2
+            elif total_jug > total_adv:
+                pts_won = 2
+        else:
+            if total_jug < 17:
+                if total_jug > total_adv:
+                    pts_won = 1
+            else:
+                if total_jug > bj:
+                    pts_won = 0
+    return pts_won
+
+def enviar_msj_bitacora(carta_aleatoria, dir_bitacora):
+    """
+    función: enviar_msj_bitacora()
+    descripción: Función que selecciona el mensaje correcto que se envía a bitácora de acuerdo al valor de la carta
+    params: carta_actual, dir_bitacora
+    """
+    if carta_aleatoria in ["J", "Q", "K"]:
+        msj_bitacora = f"{jug1} - Carta: '{carta_aleatoria}' y su valor es '10'.\n" 
+        agregar_accion_bitacora(dir_bitacora, msj_bitacora)
+    else:
+        msj_bitacora = f"{jug1} - Carta: '{carta_aleatoria}' y su valor es '{carta_aleatoria}.'\n" 
+        agregar_accion_bitacora(dir_bitacora, msj_bitacora)
+
 def random_boolean() -> bool:
     """
     función: random_boolean()
@@ -336,37 +376,6 @@ def random_boolean() -> bool:
     random_num = random.random()
 
     return random_num <= 0.4
-
-def crear_bitacora() -> str:
-    """
-    función: random_boolean()
-    descripción: Función para obtener un valor aleatorio de True o False
-    params: N/A
-    """
-    directory = "/Users/robjimn/Documents/Roberto Rojas/Cenfotec/Principios Programación/Proyecto/bitacora"
-
-    tiempo_actual = datetime.now()
-
-    # Crear String de timestamp
-    timestamp_str = tiempo_actual.strftime("%d%m%Y_%H%M%S")
-
-    file_name = f"Blackjack_Bitácora_{timestamp_str}.txt"
-
-    file_path = os.path.join(directory, file_name)
-
-    with open(file_path, "w") as file:
-        file.write(f"Bitácora: {tiempo_actual}\nPD: Las horas se muestran en formato de 24 horas\n")
-
-    return file_path
-
-def agregar_accion_bitacora(dir_bitacora, msj_bitacora):
-
-    ta = datetime.now()
-    formatted_time = ta.strftime("%I:%M:%S %p")
-    msj_completo = f"- {formatted_time} - {msj_bitacora}\n"
-
-    with open(dir_bitacora, "a") as file:
-        file.write(msj_completo)
 
 
 # /Users/robjimn/Documents/Roberto Rojas/Cenfotec/Principios Programación/Proyecto/bitacora

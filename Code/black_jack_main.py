@@ -18,8 +18,8 @@ puntos_J2 = 0
 jug1 = "Jugador 1"
 jug2 = "Jugador 2"
 
-baraja = crear_baraja()
-print_baraja(baraja)
+baraja = crear_baraja(dir_bitacora)
+print_baraja(baraja, dir_bitacora)
 
 print("\nBienvenido al Juego del siglo - BlackJack!!\n")
 
@@ -39,15 +39,10 @@ while salida_juego == False:
     msj_bitacora = f"\n\nSe ha iniciado un juego nuevo - Ronda No.{ronda}.\n"
     agregar_accion_bitacora(dir_bitacora, msj_bitacora)
 
-
     cant_zeros = baraja.count(0)
 
     total_J1 = 0
     total_J2 = 0
-
-    if (total_J1 == 21 and cant_zeros < 50) or (total_J2 == 21 and cant_zeros < 50):
-        while total_J1 != 21 or total_J2 != 21:
-            print()
 
     if cant_zeros <= 48:
         #Parte del jugador 1
@@ -122,7 +117,7 @@ while salida_juego == False:
         puntos_J1 = totales['pts_J1']
         puntos_J2 = totales['pts_J2']
         
-        msj_bitacora = f"- Puntos del {jug1}: {puntos_J1}.\n- Puntos del {jug2}: {puntos_J2}.\n"
+        msj_bitacora = f"Información de puntos:\n      * Puntos del {jug1}: {puntos_J1}\n      * Puntos del {jug2}: {puntos_J2}\n"
         agregar_accion_bitacora(dir_bitacora, msj_bitacora)
 
         print
@@ -189,14 +184,18 @@ while salida_juego == False:
             salida_juego = True
         
         else:
+            # Este bloque de "else" lleva implícito que pasa cuando quedan una o 2 cartas.
             total_pts_J1 += 0
             total_pts_J2 += 0
             print("No quedan mas cartas en la baraja. Inicie un nuevo juego. Gracias, chao!")
+            msj_bitacora = f"El juego se ha quedado sin cartas en la baraja y ha finalizado.\n"
+            agregar_accion_bitacora(dir_bitacora, msj_bitacora)
+
             salida_juego = True
             
     ronda += 1
 
-print(f"\n- Puntos del {jug1}: {total_pts_J1}")
+print(f"\nInformación del puntaje:\n- Puntos del {jug1}: {total_pts_J1}")
 print(f"- Puntos del {jug2}: {total_pts_J2}")
 
 cartas_rest = 52 - cant_zeros
@@ -206,6 +205,9 @@ print("\nBaraja actual:\n")
 print_baraja(data_J2["baraja_actual"])
 
 msj = obtener_resultado(total_pts_J1, total_pts_J2, dir_bitacora)
+
+msj_bitacora = f"Este es el último mensaje en la bitácora, el juego ha finalizado!\n"
+agregar_accion_bitacora(dir_bitacora, msj_bitacora)
 
 print("")
 print(msj)
